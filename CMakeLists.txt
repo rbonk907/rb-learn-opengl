@@ -20,8 +20,8 @@ include_directories(includes/
                     libs/glfw/include/ )
 
 file (GLOB GLAD_SOURCE libs/glad/src/gl.c)
-file (GLOB PROJECT_HEADERS includes/*.hpp)
-file (GLOB PROJECT_SOURCES src/*.cpp)
+file (GLOB PROJECT_HEADERS includes/*.h)
+file (GLOB PROJECT_SOURCES src/*.c)
 
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${GLAD_SOURCE})
