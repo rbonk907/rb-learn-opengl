@@ -1,3 +1,8 @@
+/**
+ * Two Triangles
+ * -------------
+ * Draws two triangles to the screen next to one another
+*/
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -92,14 +97,16 @@ int main() {
 	/* set up vertex data (and buffer(s)) and configure vertex attributes */
 	/* ------------------------------------------------------------------ */
 	float vertices[] = {
-		 0.5f,  0.5f, 0.0f,  // top right
-		 0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f   // top left
+		-0.25f,   0.25f, 0.0f,  // top first triangle
+		-0.5f, -0.25f, 0.0f,  // bottom left first triangle
+		 0.0f,  -0.25f, 0.0f,  // bottom right first triangle and bottom left second triangle
+		 0.25f,   0.25f, 0.0f,  // top second triangle
+		 0.5f, -0.25f, 0.0f   // bottom right second triangle
+
 	};
 	unsigned int indices[] = {
-		0, 1, 3,  // first triangle
-		1, 2, 3   // second triangle
+		0, 1, 2,  // first triangle
+		2, 3, 4   // second triangle
 	};
 	unsigned int VBO, VAO, EBO;
   glGenVertexArrays(1, &VAO);
