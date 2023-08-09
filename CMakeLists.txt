@@ -17,16 +17,40 @@ endif()
 
 include_directories(includes/
                     libs/glad/include/
-                    libs/glfw/include/ )
+                    libs/glfw/include/
+)
 
-file (GLOB GLAD_SOURCE libs/glad/src/gl.c)
-file (GLOB PROJECT_HEADERS includes/*.h)
-file (GLOB PROJECT_SOURCES src/*.c)
+set(EXERCISES
+    learn_opengl
+    two_shaders
+    two_triangles
+)
+
+function(create_project_from_exercise exercise)
+    file(GLOB PROJECT_SOURCES "src/${exercise}/*.c")
+    file(GLOB PROJECT_HEADERS "src/${exercises}/*.h")
+    file (GLOB GLAD_SOURCE "libs/glad/src/gl.c")
+
+    add_executable(${exercise} ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${GLAD_SOURCE})
+    target_link_libraries(${exercise} glfw ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
+
+    set_target_properties(${exercise} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${exercise}
+    )
+endfunction()
+
+foreach(EXERCISE ${EXERCISES})
+    create_project_from_exercise(${EXERCISE})
+endforeach(EXERCISE ${EXERCISES})
+
+# file (GLOB GLAD_SOURCE libs/glad/src/gl.c)
+# file (GLOB PROJECT_HEADERS includes/*.h)
+# file (GLOB PROJECT_SOURCES src/*.c)
 
 
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${GLAD_SOURCE})
-target_link_libraries(${PROJECT_NAME} glfw ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
+# add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${GLAD_SOURCE})
+# target_link_libraries(${PROJECT_NAME} glfw ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES 
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
+# set_target_properties(${PROJECT_NAME} PROPERTIES 
+#     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 
