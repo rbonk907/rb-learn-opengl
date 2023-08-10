@@ -27,7 +27,11 @@ set(EXERCISES
 )
 
 function(create_project_from_exercise exercise)
-    file(GLOB PROJECT_SOURCES "src/${exercise}/*.c")
+    file(GLOB PROJECT_SOURCES 
+        "src/${exercise}/*.c"
+        "src/${exercise}/*.frag"
+        "src/${exercise}/*.vert"
+    )
     file(GLOB PROJECT_HEADERS "src/${exercises}/*.h")
     file (GLOB GLAD_SOURCE "libs/glad/src/gl.c")
 
@@ -35,8 +39,20 @@ function(create_project_from_exercise exercise)
     target_link_libraries(${exercise} glfw ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
 
     set_target_properties(${exercise} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${exercise}
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${exercise}
     )
+    # copy shader files to build directory
+    file(GLOB SHADERS
+        "src/${exercise}/*.frag"
+        "src/${exercise}/*.vert"
+    )
+    foreach(SHADER ${SHADERS})
+        if(UNIX AND NOT APPLE)
+            file(COPY ${SHADER} DESTINATION ${CMAKE_BINARY_DIR}/bin/${exercise})
+        endif(UNIX AND NOT APPLE)
+    endforeach(SHADER ${SHADERS})
+
+    
 endfunction()
 
 foreach(EXERCISE ${EXERCISES})
