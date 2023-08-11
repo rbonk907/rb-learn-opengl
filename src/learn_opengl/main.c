@@ -11,24 +11,6 @@
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"layout (location = 1) in vec3 aColor;\n"
-"out vec3 ourColor;\n"
-"void main()\n"
-"{\n"
-"	 gl_Position = vec4(aPos, 1.0);\n"
-"  ourColor = aColor;\n"
-"}\0";
-
-const char* fragmentShaderSource = "#version 330 core\n"
-"in vec3 ourColor;\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"	 FragColor = vec4(ourColor, 1.0);\n"
-"}\0";
-
 /* Pototypes */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -61,43 +43,6 @@ int main() {
 	/* Build and compile shader program  */
 	/* --------------------------------- */
 	/* Compile vertex shader source code */
-#if 0
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	check_shader_compile_errors(vertexShader, "VERTEX");
-
-	/* Compile Fragment shader source code */
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	check_shader_compile_errors(fragmentShader, "FRAGMENT");
-  
-	/* Link shaders */
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	int success;
-	char infoLog[512];
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		printf("ERROR::LINKER::COMPILATION_FAILED\n");
-		printf("%s\n", infoLog);
-
-		exit(1);
-	}
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-#endif
-
 	Shader_T ourShader = Shader_new("./shader.vert", "./shader.frag");
 
 	/* set up vertex data (and buffer(s)) and configure vertex attributes */
